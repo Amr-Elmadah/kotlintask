@@ -1,49 +1,39 @@
 package com.mytaxi.task.vehicles
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import com.mytaxi.task.R
-import kotlinx.android.synthetic.main.activity_vehicles.*
+import com.mytaxi.task.utils.ActivityUtils
 
 class VehiclesActivity : AppCompatActivity() {
 
-    private var mTabsPagerAdapter: TabsPagerAdapter? = null
+    private var vehiclesFragment: VehiclesFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vehicles)
-        setupViewPager()
-        setupSegmentedButton()
+        vehiclesFragment = if (supportFragmentManager.findFragmentById(R.id.container) == null) {
+            VehiclesFragment()
+        } else {
+            supportFragmentManager.findFragmentById(R.id.container) as VehiclesFragment
+        }
+        ActivityUtils.addFragmentToActivity(supportFragmentManager, vehiclesFragment, R.id.container)
+
     }
 
-    private fun setupViewPager() {
-        mTabsPagerAdapter = TabsPagerAdapter(supportFragmentManager)
-        viewpager.adapter = mTabsPagerAdapter
-        viewpager.currentItem = 0
-    }
-
-    private fun setupSegmentedButton() {
-        segmented.setOnCheckedChangeListener { radioGroup, checkedId ->
-            if (checkedId == R.id.rb_list)
-                viewpager.currentItem = 0
-            else if (checkedId == R.id.rb_map) {
-                viewpager.currentItem = 1
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
             }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private inner class TabsPagerAdapter internal constructor(fm: FragmentManager) :
-        FragmentStatePagerAdapter(fm) {
-
-        override fun getItem(position: Int): Fragment {
-            return Fragment()
-        }
-
-        override fun getCount(): Int {
-            return 2
-        }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

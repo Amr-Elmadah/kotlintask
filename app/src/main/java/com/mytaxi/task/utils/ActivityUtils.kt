@@ -7,13 +7,13 @@ import com.mytaxi.task.utils.Utils.checkNotNull
 object ActivityUtils {
     fun addFragmentToActivity(
         fragmentManager: FragmentManager,
-        fragment: Fragment, frameId: Int
+        fragment: Fragment?, frameId: Int
     ) {
         checkNotNull(fragmentManager)
         checkNotNull(fragment)
         val transaction = fragmentManager.beginTransaction()
         //        transaction.setCustomAnimations(R.anim.activity_open_translate, 0);
-        transaction.add(frameId, fragment)
+        transaction.add(frameId, fragment!!)
         transaction.commit()
         //        fragmentManager.executePendingTransactions();
     }
