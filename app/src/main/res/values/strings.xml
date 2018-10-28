@@ -9,6 +9,9 @@
     <!--Vehicles-->
     <string name="list">List</string>
     <string name="map">Map</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="fleet_type">Fleet type :</string>
+    <string name="heading">Heading :</string>
+    <string name="id">ID : ‎‎‎</string>
+    <string name="no_vehicles">No vehicles found‎‎‎</string>
 
 </resources>

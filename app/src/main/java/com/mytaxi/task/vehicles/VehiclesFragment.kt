@@ -11,13 +11,19 @@ import com.mytaxi.task.BaseNetworkFragment
 import com.mytaxi.task.R
 import com.mytaxi.task.data.VehiclesRepository
 import com.mytaxi.task.data.models.Vehicle
+import com.mytaxi.task.vehicles.list.VehiclesListFragment
+import com.mytaxi.task.vehicles.map.VehiclesMapsFragment
 import kotlinx.android.synthetic.main.fragment_vehicles.*
 import kotlinx.android.synthetic.main.fragment_vehicles.view.*
 
 
-class VehiclesFragment : BaseNetworkFragment(), VehiclesContract.View {
+class VehiclesFragment : BaseNetworkFragment(), VehiclesListFragment.OnVehicleItemClickedListener,
+    VehiclesContract.View {
     private var mPresenter: VehiclesContract.Presenter? = null
     private var mTabsPagerAdapter: TabsPagerAdapter? = null
+    private var vehiclesListFragment: VehiclesListFragment = VehiclesListFragment(this)
+    private var vehiclesMapsFragment: VehiclesMapsFragment = VehiclesMapsFragment()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +38,6 @@ class VehiclesFragment : BaseNetworkFragment(), VehiclesContract.View {
         super.onViewCreated(view, savedInstanceState)
         setupViewPager()
         setupSegmentedButton()
-
         if (mPresenter == null) {
             mPresenter = VehiclesPresenter(VehiclesRepository(), this)
         }
@@ -40,11 +45,15 @@ class VehiclesFragment : BaseNetworkFragment(), VehiclesContract.View {
         if (savedInstanceState == null) {
             mPresenter!!.start()
         }
+        srlVehicles.setOnRefreshListener {
+            mPresenter!!.loadVehicles()
+        }
     }
 
     private fun setupViewPager() {
         mTabsPagerAdapter = TabsPagerAdapter(activity!!.supportFragmentManager)
         srlVehicles.viewpager.adapter = mTabsPagerAdapter
+        srlVehicles.viewpager.currentItem = 0
     }
 
     private fun setupSegmentedButton() {
@@ -67,11 +76,17 @@ class VehiclesFragment : BaseNetworkFragment(), VehiclesContract.View {
         }
     }
 
+    override fun onVehicleItemClicked(position: Int) {
+        segmented.check(R.id.rb_map)
+        vehiclesMapsFragment.selectVehicle(position)
+    }
+
     private inner class TabsPagerAdapter internal constructor(fm: FragmentManager) :
         FragmentStatePagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment {
-            return Fragment()
+            return if (position == 0) vehiclesListFragment
+            else vehiclesMapsFragment
         }
 
         override fun getCount(): Int {
@@ -83,7 +98,8 @@ class VehiclesFragment : BaseNetworkFragment(), VehiclesContract.View {
         get() = isAdded
 
     override fun onVehiclesLoaded(vehicles: List<Vehicle>) {
-
+        vehiclesListFragment.showVehicles(vehicles)
+        vehiclesMapsFragment.showVehicles(vehicles)
     }
 
     override fun setPresenter(presenter: VehiclesContract.Presenter) {
