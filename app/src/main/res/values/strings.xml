@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">mytaxitask</string>
+    <string name="app_name">MyTaxiTask</string>
+    <string name="check_connection">Check your internet connection.</string>
+    <string name="server_error">Something went wrong</string>
+    <string name="timeout">The request is taking time longer than we expect!</string>
+    <string name="retry">Retry</string>
+    <string name="no_content">No content…</string>
+
+    <!--Vehicles-->
+    <string name="list">List</string>
+    <string name="map">Map</string>
+    <string name="title_activity_maps">Map</string>
+
 </resources>
