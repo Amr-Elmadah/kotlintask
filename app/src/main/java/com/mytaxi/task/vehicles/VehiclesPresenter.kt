@@ -1,5 +1,6 @@
 package com.mytaxi.task.vehicles
 
+import android.arch.lifecycle.MutableLiveData
 import com.mytaxi.task.Action
 import com.mytaxi.task.data.VehiclesRepository
 import com.mytaxi.task.data.callbacks.LoadVehiclesCallback
@@ -8,7 +9,12 @@ import com.mytaxi.task.data.models.Vehicle
 
 class VehiclesPresenter(private val vehiclesRepository: VehiclesRepository?, view: VehiclesContract.View) :
     VehiclesContract.Presenter {
+    override fun getPresenter(): VehiclesPresenter {
+        return this
+    }
+
     private val mView: VehiclesContract.View = checkNotNull(view)
+    var mVehicles = MutableLiveData<List<Vehicle>>()
 
     init {
         mView.setPresenter(this)
@@ -22,10 +28,9 @@ class VehiclesPresenter(private val vehiclesRepository: VehiclesRepository?, vie
         mView.setLoadingIndicator(true)
         vehiclesRepository?.loadVehicles(object : LoadVehiclesCallback {
             override fun onVehiclesLoaded(vehicles: List<Vehicle>) {
-                if (mView.isActive) {
-                    mView.onVehiclesLoaded(vehicles)
-                    mView.setLoadingIndicator(false)
-                }
+                mVehicles.value = vehicles
+//                mView.onVehiclesLoaded(vehicles)
+                mView.setLoadingIndicator(false)
             }
 
             override fun onResponseError(responseCode: Int) {

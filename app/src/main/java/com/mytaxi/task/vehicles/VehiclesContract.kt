@@ -12,11 +12,11 @@ interface VehiclesContract {
         val isActive: Boolean
 
         fun setLoadingIndicator(active: Boolean)
-
-        fun onVehiclesLoaded(vehicles: List<Vehicle>)
     }
 
     interface Presenter : BasePresenter {
         fun loadVehicles()
+
+        fun getPresenter(): VehiclesPresenter
     }
 }

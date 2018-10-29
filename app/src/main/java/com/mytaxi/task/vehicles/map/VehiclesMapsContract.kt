@@ -5,6 +5,7 @@ import com.mytaxi.task.BasePresenter
 import com.mytaxi.task.BaseView
 import com.mytaxi.task.NetworkView
 import com.mytaxi.task.data.models.Vehicle
+import com.mytaxi.task.vehicles.VehiclesPresenter
 
 interface VehiclesMapsContract {
 
@@ -12,11 +13,13 @@ interface VehiclesMapsContract {
 
         val isActive: Boolean
 
+        fun observeListPresenter(presenter: VehiclesPresenter)
+
         fun showVehicles(vehicles: List<Vehicle>)
 
         fun selectVehicle(position: Int)
 
-        fun centerlizeMarkers(markers : List<Marker>)
+        fun centerlizeMarkers(markers: List<Marker>)
     }
 
     interface Presenter : BasePresenter

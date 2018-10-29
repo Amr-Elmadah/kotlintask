@@ -1,8 +1,9 @@
 package com.mytaxi.task.vehicles.list
 
 import android.annotation.SuppressLint
-import android.content.Context
+import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import com.mytaxi.task.BaseNetworkFragment
 import com.mytaxi.task.R
 import com.mytaxi.task.data.models.Vehicle
+import com.mytaxi.task.vehicles.VehiclesPresenter
 import kotlinx.android.synthetic.main.fragment_vehicles_list.*
 import kotlinx.android.synthetic.main.item_vehicle.view.*
 
@@ -49,15 +51,17 @@ class VehiclesListFragment(var onVehicleItemClickedListener: OnVehicleItemClicke
         rv_vehicles.adapter = mAdapter
     }
 
-    override fun showVehicles(vehicles: List<Vehicle>) {
-        if (vehicles.isEmpty()) {
-            tvNoVehicles.visibility = View.VISIBLE
-            rv_vehicles.visibility = View.GONE
-        } else {
-            tvNoVehicles.visibility = View.GONE
-            rv_vehicles.visibility = View.VISIBLE
-            mAdapter.replaceData(vehicles)
-        }
+    override fun observeListPresenter(presenter: VehiclesPresenter) {
+        presenter.mVehicles.observe(this, Observer {
+            if (it!!.isEmpty()) {
+                tvNoVehicles.visibility = View.VISIBLE
+                rv_vehicles.visibility = View.GONE
+            } else {
+                tvNoVehicles.visibility = View.GONE
+                rv_vehicles.visibility = View.VISIBLE
+                mAdapter.replaceData(it!!)
+            }
+        })
     }
 
     override val isActive: Boolean
@@ -68,7 +72,7 @@ class VehiclesListFragment(var onVehicleItemClickedListener: OnVehicleItemClicke
     }
 
     class VehiclesAdapter(
-        private val context: Context?,
+        private val context: FragmentActivity?,
         private var mVehicles: List<Vehicle?>,
         private val onVehicleItemClickedListener: OnVehicleItemClickedListener
     ) : RecyclerView.Adapter<VehiclesAdapter.ViewHolder>() {

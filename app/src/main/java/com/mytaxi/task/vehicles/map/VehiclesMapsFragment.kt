@@ -1,5 +1,6 @@
 package com.mytaxi.task.vehicles.map
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.mytaxi.task.BaseNetworkFragment
 import com.mytaxi.task.R
 import com.mytaxi.task.data.models.FleetType
 import com.mytaxi.task.data.models.Vehicle
+import com.mytaxi.task.vehicles.VehiclesPresenter
 
 
 class VehiclesMapsFragment : BaseNetworkFragment(), OnMapReadyCallback, VehiclesMapsContract.View {
@@ -52,6 +54,12 @@ class VehiclesMapsFragment : BaseNetworkFragment(), OnMapReadyCallback, Vehicles
 
     override val isActive: Boolean
         get() = isAdded
+
+    override fun observeListPresenter(presenter: VehiclesPresenter) {
+        presenter.mVehicles.observe(this, Observer {
+            showVehicles(it!!)
+        })
+    }
 
     override fun showVehicles(vehicles: List<Vehicle>) {
         isVehiclesLoaded = true

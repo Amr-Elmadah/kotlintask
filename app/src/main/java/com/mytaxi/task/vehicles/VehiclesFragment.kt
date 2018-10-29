@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import com.mytaxi.task.BaseNetworkFragment
 import com.mytaxi.task.R
 import com.mytaxi.task.data.VehiclesRepository
-import com.mytaxi.task.data.models.Vehicle
 import com.mytaxi.task.vehicles.list.VehiclesListFragment
 import com.mytaxi.task.vehicles.map.VehiclesMapsFragment
 import kotlinx.android.synthetic.main.fragment_vehicles.*
@@ -48,6 +47,9 @@ class VehiclesFragment : BaseNetworkFragment(), VehiclesListFragment.OnVehicleIt
         srlVehicles.setOnRefreshListener {
             mPresenter!!.loadVehicles()
         }
+
+        vehiclesListFragment.observeListPresenter(mPresenter!!.getPresenter())
+        vehiclesMapsFragment.observeListPresenter(mPresenter!!.getPresenter())
     }
 
     private fun setupViewPager() {
@@ -96,11 +98,6 @@ class VehiclesFragment : BaseNetworkFragment(), VehiclesListFragment.OnVehicleIt
 
     override val isActive: Boolean
         get() = isAdded
-
-    override fun onVehiclesLoaded(vehicles: List<Vehicle>) {
-        vehiclesListFragment.showVehicles(vehicles)
-        vehiclesMapsFragment.showVehicles(vehicles)
-    }
 
     override fun setPresenter(presenter: VehiclesContract.Presenter) {
         mPresenter = presenter
