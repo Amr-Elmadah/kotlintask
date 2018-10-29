@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import org.parceler.Parcel
 
 @Parcel
-class Coordinate(
+data class Coordinate(
     @Expose
     var latitude: Double,
     @Expose

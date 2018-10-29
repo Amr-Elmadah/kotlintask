@@ -59,7 +59,7 @@ class VehiclesListFragment(var onVehicleItemClickedListener: OnVehicleItemClicke
             } else {
                 tvNoVehicles.visibility = View.GONE
                 rv_vehicles.visibility = View.VISIBLE
-                mAdapter.replaceData(it!!)
+                mAdapter.replaceData(it)
             }
         })
     }

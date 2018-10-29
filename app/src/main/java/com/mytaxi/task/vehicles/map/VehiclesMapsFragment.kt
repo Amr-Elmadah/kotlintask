@@ -66,14 +66,15 @@ class VehiclesMapsFragment : BaseNetworkFragment(), OnMapReadyCallback, Vehicles
         mVehicles = vehicles
         if (isMapInitialized) {
             mMap.clear()
-            markers = ArrayList()
-            for (vehicle in vehicles) {
-                val markerColor: Float =
-                    if (vehicle.fleetType === FleetType.POOLING) BitmapDescriptorFactory.HUE_AZURE else BitmapDescriptorFactory.HUE_YELLOW
-                putMarker(vehicle.id, vehicle.coordinate.latitude, vehicle.coordinate.longitude, markerColor)
+            if (!vehicles.isEmpty()) {
+                markers = ArrayList()
+                for (vehicle in vehicles) {
+                    val markerColor: Float =
+                        if (vehicle.fleetType === FleetType.POOLING) BitmapDescriptorFactory.HUE_AZURE else BitmapDescriptorFactory.HUE_YELLOW
+                    putMarker(vehicle.id, vehicle.coordinate.latitude, vehicle.coordinate.longitude, markerColor)
+                }
+                centerlizeMarkers(markers)
             }
-            centerlizeMarkers(markers)
-
         }
     }
 

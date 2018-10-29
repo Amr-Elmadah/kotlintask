@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import org.parceler.Parcel
 
 @Parcel
-class Vehicle(
+data class Vehicle(
     @Expose
     var id: Int,
     @Expose

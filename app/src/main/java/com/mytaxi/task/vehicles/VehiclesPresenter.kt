@@ -29,7 +29,6 @@ class VehiclesPresenter(private val vehiclesRepository: VehiclesRepository?, vie
         vehiclesRepository?.loadVehicles(object : LoadVehiclesCallback {
             override fun onVehiclesLoaded(vehicles: List<Vehicle>) {
                 mVehicles.value = vehicles
-//                mView.onVehiclesLoaded(vehicles)
                 mView.setLoadingIndicator(false)
             }
 
