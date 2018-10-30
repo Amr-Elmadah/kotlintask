@@ -7,6 +7,7 @@ import com.mytaxi.task.data.models.FleetType
 import com.mytaxi.task.data.models.Vehicle
 import com.mytaxi.task.vehicles.VehiclesContract
 import com.mytaxi.task.vehicles.VehiclesPresenter
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -24,7 +25,7 @@ import org.mockito.junit.MockitoJUnitRunner
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(MockitoJUnitRunner::class)
-class LoadingVehiclesUnitTest {
+class LoadingVehiclesTest {
     @Mock
     private lateinit var view: VehiclesContract.View
 
@@ -55,13 +56,13 @@ class LoadingVehiclesUnitTest {
     }
 
     @Test
-    fun checkEmptyNullList() {
+    fun checkEmptyAndNullList() {
         presenter.loadVehiclesForTest()
         verify(vehiclesRepository)!!.loadVehicles(com.nhaarman.mockitokotlin2.capture(argumentCaptor))
         argumentCaptor.value.onVehiclesLoaded(getList())
         verify(view).setLoadingIndicator(false)
         verify(view).showVehicleList(com.nhaarman.mockitokotlin2.capture(entityArgumentCaptor))
-        assertTrue(entityArgumentCaptor.value != null && !entityArgumentCaptor.value.isEmpty())
+        assertFalse(entityArgumentCaptor.value == null || entityArgumentCaptor.value.isEmpty())
     }
 
     private fun getList(): List<Vehicle> {
