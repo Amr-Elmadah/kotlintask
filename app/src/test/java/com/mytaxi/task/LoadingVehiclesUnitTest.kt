@@ -45,7 +45,7 @@ class LoadingVehiclesUnitTest {
     }
 
     @Test
-    fun checkNotEmptyList() {
+    fun checkListWithData() {
         presenter.loadVehiclesForTest()
         verify(vehiclesRepository)!!.loadVehicles(com.nhaarman.mockitokotlin2.capture(argumentCaptor))
         argumentCaptor.value.onVehiclesLoaded(getList())
@@ -61,7 +61,7 @@ class LoadingVehiclesUnitTest {
         argumentCaptor.value.onVehiclesLoaded(getList())
         verify(view).setLoadingIndicator(false)
         verify(view).showVehicleList(com.nhaarman.mockitokotlin2.capture(entityArgumentCaptor))
-        assertTrue(entityArgumentCaptor.value == null || entityArgumentCaptor.value.isEmpty())
+        assertTrue(entityArgumentCaptor.value != null && !entityArgumentCaptor.value.isEmpty())
     }
 
     private fun getList(): List<Vehicle> {
