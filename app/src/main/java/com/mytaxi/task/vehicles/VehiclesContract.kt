@@ -12,10 +12,14 @@ interface VehiclesContract {
         val isActive: Boolean
 
         fun setLoadingIndicator(active: Boolean)
+
+        fun showVehicleList(vehicles: List<Vehicle>)
     }
 
     interface Presenter : BasePresenter {
         fun loadVehicles()
+
+        fun loadVehiclesForTest()
 
         fun getPresenter(): VehiclesPresenter
     }

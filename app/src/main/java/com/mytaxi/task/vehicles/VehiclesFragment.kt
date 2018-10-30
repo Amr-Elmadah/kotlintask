@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.mytaxi.task.BaseNetworkFragment
 import com.mytaxi.task.R
 import com.mytaxi.task.data.VehiclesRepository
+import com.mytaxi.task.data.models.Vehicle
 import com.mytaxi.task.vehicles.list.VehiclesListFragment
 import com.mytaxi.task.vehicles.map.VehiclesMapsFragment
 import kotlinx.android.synthetic.main.fragment_vehicles.*
@@ -18,6 +19,7 @@ import kotlinx.android.synthetic.main.fragment_vehicles.view.*
 
 class VehiclesFragment : BaseNetworkFragment(), VehiclesListFragment.OnVehicleItemClickedListener,
     VehiclesContract.View {
+
     private var mPresenter: VehiclesContract.Presenter? = null
     private var mTabsPagerAdapter: TabsPagerAdapter? = null
     private var vehiclesListFragment: VehiclesListFragment = VehiclesListFragment(this)
@@ -98,6 +100,10 @@ class VehiclesFragment : BaseNetworkFragment(), VehiclesListFragment.OnVehicleIt
 
     override val isActive: Boolean
         get() = isAdded
+
+    //Just for unit testing
+    override fun showVehicleList(vehicles: List<Vehicle>) {
+    }
 
     override fun setPresenter(presenter: VehiclesContract.Presenter) {
         mPresenter = presenter
