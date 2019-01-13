@@ -1,12 +1,12 @@
 # mytaxitask
 
-##Used Design Pattern :  
-######MVP (Model View Presenter)
+## Used Design Pattern :  
+###### MVP (Model View Presenter)
 
-##Used Language :
-######Kotlin
+## Used Language :
+###### Kotlin
 
-##Used Technologies :
+## Used Technologies :
 * Retrofit :  
     * For accessing apis
 * Gson : 
@@ -18,6 +18,6 @@
 * Junit - Mockito : 
     * For unit testing
     
-##Used Driven Development : 
-######BDD (Behavior Driven Development)
+## Used Driven Development : 
+###### BDD (Behavior Driven Development)
 * I prefer using TDD but unfortunately I have a lot of pressure in my work these days and if I used TDD I would want much available time.
